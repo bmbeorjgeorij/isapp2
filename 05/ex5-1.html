@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -9,21 +10,22 @@
     <script type="text/javascript" src="../lib/osql.js"></script>
 
     <script>
-        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+        osql.requireLogin(); // すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
         function button1Pressed() {
-            doSelect();
+            doSearch();
         }
 
-        async function doSelect() {
-            var sql = 'select * from Tweets order by time desc limit 20';
+        async function doSearch() {
+            var keyword = document.getElementById('tf2').value;
+            var sql = `select * from Tweets where tweet like '%${keyword}%' order by time desc limit 20`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.name + ',' + object.tweet + ',' + object.time + ',     '+ object.id+'</li>';
+                html = html + '<li>' + object.name + ',' + object.tweet + ',' + object.time + ',     ' + object.id + '</li>';
             }
             html = html + '</ul>';
             document.getElementById('result').innerHTML = html;
@@ -33,10 +35,16 @@
 </head>
 
 <body>
-    <h1>わ</h1>
-    <button onclick="button1Pressed()">X</button>
+    <h1>Tweets</h1>
+    <br>
+    tweet:<input id="tf1" type="textfield">
+    <button onclick="button1Pressed()">tweet</button>
+    <br>
     <hr>
-    <p id="result">xxxx</p>
+    検索:<input id="tf2" type="textfield">
+    <button onclick="button1Pressed()">検索</button>
+    <br>
+    <p id="result">ここにツイートが表示されます</p>
 </body>
 
 </html>
