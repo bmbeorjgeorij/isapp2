@@ -16,18 +16,21 @@
         }
 
         async function doSelect() {
-            var tweet = document.getElementById('tf').Value;
+            var stweet = document.getElementById('tf1').value;
 
-            var sql = `select * from Tweets where tweet like "${stweet}"`;
+            var sql = `select * from Tweets where tweet like "%${stweet}%"`;
             var objects = await osql.connect(sql);
+
             console.log(objects);
+
             var html = '';
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' +  object.id + ',' + object.name + ',' + object.tweet + ',' + object.time + '</li>';
+                html = html + '<li>'+ object.tweet +'</li>';
             }
             html = html + '</ul>';
+
             document.getElementById('result').innerHTML = html;
         }
     </script>
@@ -35,10 +38,9 @@
 </head>
 
 <body>
-    <h1>ツイート</h1>
-    検索内容:<input id="tf" type="textfield">
+    <h1>Tweet</h1>
+    検索内容:<input id="tf1" type="text">
     <button onclick="button1Pressed()">検索</button>
-    <hr>
     <p id="result"></p>
     
 </body>
