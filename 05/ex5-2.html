@@ -27,6 +27,31 @@
             document.getElementById('tf1').value = '';
             document.getElementById('tf2').value = ''
         }
+
+        function button2Peressd() {
+            doSelect();
+        }
+
+        async function doSelect() {
+            var s = document.getElementById('tf3').value;
+
+            var sql = `select * from Tweets where tweet like "%${s}%"`;
+            var objects = await osql.connect(sql);
+
+            console.log(objects);
+
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>'+ object.tweet +'</li>';
+            }
+            html = html + '</ul>';
+
+            document.getElementById('result1').innerHTML = html;
+        }
+
+    
     </script>
 
 </head>
@@ -40,6 +65,13 @@
     <button onclick="button1Pressed()">tweet</button>
     <br>
     <p id="result"></p>
+    <hr>
+    <h2>検索</h2>
+    <input id="tf3" type="textfield">
+    <button onclick="button2Peressd()">検索</button>
+    <br>
+    <p id="result1"></p>
+
     
 </body>
 
