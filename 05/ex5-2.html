@@ -11,6 +11,14 @@
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
+        $().ready(function(){
+            doSelect();
+        });
+
+        async function doHello(){
+            document.getElementById('tf0').innerHTML = ''
+        }
+
         function button1Pressed() {
             doInsert();
         }
@@ -26,12 +34,10 @@
             document.getElementById('result').innerHTML = "tweetしました";
             document.getElementById('tf1').value = '';
             document.getElementById('tf2').value = ''
-        }
-
-        function button2Peressd() {
             doSelect();
         }
 
+        
         async function doSelect() {
             var s = document.getElementById('tf3').value;
 
@@ -68,7 +74,7 @@
     <hr>
     <h2>検索</h2>
     <input id="tf3" type="textfield">
-    <button onclick="button2Peressd()">検索</button>
+    <button onclick="doSelect()">検索</button>
     <br>
     <p id="result1"></p>
 
