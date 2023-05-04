@@ -10,15 +10,33 @@
 
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+        
+        var x;
 
         $().ready(function(){
-            doSelect();
+            x=0;
+            setInterval(doHello,2000);
         });
 
-        async function doSelect(){
-            document.getElementById('tf0').innerHTML = ''
+        async function doHello() {
+            x++;
+            var sql = `select * from Tweets order by time desc limit 50`;
+            var objects = await osql.connect(sql);
+
+            console.log(objects);
+
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>' + object.id + ',' + object.name + ',' + object.tweet + ',' + object.time +'</li>';
+            }
+            html = html + '</ul>';
+
+            document.getElementById('result1').innerHTML = html;
         }
 
+    
         function button1Pressed() {
             doInsert();
         }
@@ -33,14 +51,16 @@
 
             document.getElementById('result').innerHTML = "tweetしました";
             document.getElementById('tf1').value = '';
-            document.getElementById('tf2').value = ''
+            document.getElementById('tf2').value = '';
+        }
+
+        function button2Pressed() {
             doSelect();
         }
 
-        
         async function doSelect() {
+            clearInterval(x);
             var s = document.getElementById('tf3').value;
-
             var sql = `select * from Tweets where tweet like "%${s}%"`;
             var objects = await osql.connect(sql);
 
@@ -53,8 +73,8 @@
                 html = html + '<li>'+ object.tweet +'</li>';
             }
             html = html + '</ul>';
-
             document.getElementById('result1').innerHTML = html;
+        
         }
 
     
