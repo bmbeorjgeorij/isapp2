@@ -29,13 +29,12 @@
                 html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>'; 
                 html = html + '</tr>';
             }
-            html = html + '<p><input type="text" id = "deleteUserId"> <button onclick="deleteUser(document.getElementById(\'deleteUserId\').value)">削除</button><hr>';
-            html = html + '</table>';
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
         }
 
-        async function deleteUser(userid) {
+        async function deleteUser() {
+            var userid = document.getElementById('tf1').value;
             var sql = `delete from Users where id = '${userid}'`;
             await osql.connect(sql);
             execSelect();
@@ -48,6 +47,8 @@
 <body>
     <h1>Users</h1>
     <hr>
+    ID:<input id="tf1" value="" type = "textfield">
+    <button onclick = "deleteUser()">削除</button>
     <p id="result">xxxx</p>
     
 </body>
