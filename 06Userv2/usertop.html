@@ -17,9 +17,11 @@
 
         function init(){
             var sd =sessionStorage.getItem('username');
+            var ID =sessionStorage.getItem('userid');
+            document.getElementById('mmmm').innerHTML = `<a href="update.html?userid=` + ID + `">`+ `ユーザ情報変更`;
             document.getElementById('welcome').innerHTML = 'ようこそ' + sd + 'さん';
-
         }
+
     </script>
 
 </head>
@@ -28,7 +30,7 @@
     <h1>ユーザトップ</h1>
     <p id="welcome">ようこそXXさん</p>
     <hr>
-    <p><a href="update.html">ユーザ情報変更</a></p>
+    <p id ="mmmm"></p>
     <p><a href="t.html">tweet</a></p>
 
 </body>
